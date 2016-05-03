@@ -1,0 +1,230 @@
+=========
+q1a
+=========
+
+import random
+import math
+
+def main():
+    low = 1
+    high = 100
+    target = random.randint(low, high)
+    num = input("Guess my number between 1 and 100: ")
+    count = 0;
+    while (target != num):
+        count += 1
+        if (num > target):
+            num = input(str(num) + " is too high, try again: ")
+        else:
+            num = input(str(num) + " is too low, try again: ")
+
+    print "It is " + str(num) + "! You got it! Average #of guesses is ~ " + str(math.log(high, 2)) + " guesses."
+    congratext = ""    
+    if (count < (math.log(high, 2) * 1.1)):
+        congratext = "Excellent!"
+    elif (count < (math.log(high, 2) * 1.5)):
+        congratext = "Good job!"
+    print "You took " + str(count) + " guesses. " + congratext
+
+main()
+
+=========
+q3
+=========
+
+encrypText = "Ryhu vla bhduv djr, lq Ghfhpehu 1989, L zdv orrnlqj iru d 'kreeb' surjudpplqj surmhfw wkdw zrxog nhhs ph rffxslhg gxulqj wkh zhhn durxqg Fkulvwpdv. Pb riilfh ... zrxog eh forvhg, exw L kdg d krph frpsxwhu, dqg qrw pxfk hovh rq pb kdqgv. L ghflghg wr zulwh dq lqwhusuhwhu iru wkh qhz vfulswlqj odqjxdjh L kdg ehhq wklqnlqj derxw odwhob: d ghvfhqgdqw ri DEF wkdw zrxog dsshdo wr Xqla/F kdfnhuv. L fkrvh Sbwkrq dv d zrunlqj wlwoh iru wkh surmhfw, ehlqj lq d voljkwob luuhyhuhqw prrg (dqg d elj idq ri Prqwb Sbwkrq'v Ioblqj Flufxv)."
+encrypList = list(encrypText)
+
+'''
+Encryption is created by going three letters forward in the alphabet or if the letter is at the end of the alphabet by spilling
+over onto the front. I decrypted it by reversing this process: if the letter was not one of the first three letters I went three
+letters backwards, otherwise I went 23 letters forward.
+'''
+let = 0
+while let < len(encrypList):
+    if ord(encrypList[let]) >= 68 and ord(encrypList[let]) <= 90 or ord(encrypList[let]) >= 100 and ord(encrypList[let]) <= 122:
+        encrypList[let] = chr(ord(encrypList[let]) - 3)
+    elif ord(encrypList[let]) >= 65 and ord(encrypList[let]) <= 67 or ord(encrypList[let]) >= 97 and ord(encrypList[let]) <= 99:
+        encrypList[let] = chr(ord(encrypList[let]) + 23)
+    let += 1
+
+print "".join(encrypList)
+
+=========
+q4
+=========
+
+ff = raw_input("Enter a file name: ")
+f = open(ff)
+
+flst = f.readlines()
+
+count = 0
+info = ""
+
+# records information in string form about files without . extensions at the end
+while count < len(flst):
+    tmp = flst[count].split()
+    if tmp[0] >= 30 and tmp[3].count(".") == 0:
+        info += "".join(flst[count])
+    count += 1
+
+# number of files
+size = len(flst)
+slst = ' '.join(flst)
+
+# number of each type of file
+python = slst.count(".py")
+perl = slst.count(".pl")
+javascript = slst.count(".js")
+other = size - (python + perl + javascript)
+
+print "There are a total of", size, "files, including:"
+print javascript, "JavaScript files,", perl, "perl scripts,", python, "python scripts, and", other, "other files"
+print "Among the", other, "other files, the following have 30 or more lines:"
+print info
+
+
+=========
+q6b
+=========
+
+lowNum = input("Choose a low number greater than 2: ")
+highNum = input("Choose a high number: ")
+
+primes = []
+
+# checks all numbers in the specified range with the Python statement given to
+# us in 6a. if the list that statement creates is empty it means that the number
+# has no multiples, which means that it is prime so it gets added to the prime
+# list
+currNum = lowNum
+while currNum < highNum:
+    if len([x for x in range(2, currNum) if currNum % x == 0]) == 0:
+        primes.append(currNum)
+    currNum += 1
+
+print primes
+
+=========
+q7
+=========
+
+listy = raw_input("Enter a list in square brackets: ")
+slisty = listy[1:len(listy)-1]
+sslisty = slisty.split(", ")
+
+print "After removing 0's, the list becomes"
+
+# removes 0's with a for loop by going through the list and if the current
+# character is not a 0, add it to the output list
+output = []
+for x in sslisty:
+    if int(x) != 0:
+        output.append(int(x))
+
+print output
+
+# removes 0's with a while loop by going through the list and if the current
+# character is not a 0, add it to the output list
+count = 0
+output = []
+while count < len(sslisty):
+    if int(sslisty[count]) != 0:
+        output.append(int(sslisty[count]))
+    count += 1
+    
+print output
+
+# removes 0's with a for loop by going through the list and adding all elements
+# but if the current element is 0 it skips this iteration
+output = []
+for x in sslisty:
+    if int(x) == 0:
+        continue
+    output.append(int(x))
+
+print output
+
+
+=========
+q8
+=========
+
+'''
+leapYear - determines if the given year is a leap year using the
+provided forumla
+'''
+def leapYear(year):
+    if year % 4 == 0:
+        if year % 100 == 0:
+            if year % 400 == 0:
+                return True
+            else:
+                return False
+        else:
+            return True
+    else:
+        return False
+
+
+'''
+convertDay - if we are in january it doesn't matter whether it is a leap year
+or not. if it is not in january, and if it is a leap year, subtract one from
+the given day number. then subtract a number of days equal to all of the days
+of all of the preceeding months added up to get the day number of this month
+'''
+def convertDay(year, day):
+    monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+    # January
+    if day <= 31:
+        return " ".join([monthNames[0], str(day), ",", str(year)])
+
+    if leapYear(year):
+        day = day - 1
+
+    # February
+    if day <= 59:
+        return " ".join([monthNames[1], str(day - 31), ",", str(year)])
+    # March
+    elif day <= 90:
+        return " ".join([monthNames[2], str(day - 59), ",", str(year)])
+    # April
+    elif day <= 120:
+        return " ".join([monthNames[3], str(day - 90), ",", str(year)])
+    # May
+    elif day <= 151:
+        return " ".join([monthNames[4], str(day - 120), ",", str(year)])
+    # June
+    elif day <= 181:
+        return " ".join([monthNames[5], str(day - 151), ",", str(year)])
+    # July
+    elif day <= 212:
+        return " ".join([monthNames[6], str(day - 181), ",", str(year)])
+    # August
+    elif day <= 243:
+        return " ".join([monthNames[7], str(day - 212), ",", str(year)])
+    # September
+    elif day <= 273:
+        return " ".join([monthNames[8], str(day - 243), ",", str(year)])
+    # October
+    elif day <= 304:
+        return " ".join([monthNames[9], str(day - 273), ",", str(year)])
+    # November
+    elif day <= 334:
+        return " ".join([monthNames[10], str(day - 304), ",", str(year)])
+    # December
+    elif day <= 365:
+        return " ".join([monthNames[11], str(day - 334), ",", str(year)])
+
+def main():
+    dates = [0, 0]
+    while dates[0] != -1:
+        date = raw_input("Enter a year and a day number separated by a comma: ")
+        dates = date.split(",")
+        dates[0] = int(dates[0])
+        dates[1] = int(dates[1])
+        if dates[0] != -1:
+            print convertDay(dates[0], dates[1])
+
+main()

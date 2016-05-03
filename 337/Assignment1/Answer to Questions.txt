@@ -1,0 +1,61 @@
+1.
+b) 	For a description of how to use a function in python, you type
+	>>> help()
+	at the prompt. That will bring you to interactive help mode at which
+	point you can enter the module you want to know how to use
+	>>> math
+	and a list of functions in the module will be displayed.
+
+2.
+a)	print r
+	if n==r
+	if n > r:
+		break
+	if n < 2:
+		print "Better luck next time\n"
+	LOOP BEGINS AGAIN
+
+b)	print r
+	if n==r:
+		continue
+	else:
+		print "Wow, you are lucky\n"
+
+c)	print r
+	if n==r
+	if n > r
+	print "x"
+	LOOP BEGINS AGAIN
+
+d)	print r
+	if n==r:
+		continue
+	LOOP BEGINS AGAIN
+
+5.
+a) 	lst * 3 - This statement will extend the list by tripling it
+	[7, 8, 9, 7, 8, 9, 7, 8, 9]
+	[lst] * 3 - This statement will create a list of three lists
+	each consisting of the original
+	[[7, 8, 9], [7, 8, 9], [7, 8, 9]]
+
+b)	arr is a 3x3 two-dimensional array with three references to lst
+	which would make arr = [[7, 8, 9], [7, 8, 9], [7, 8, 9]].
+	The command lst[1] = 7 will change the second element in the array
+	referenced three times to a 7. So the end result of the four statements
+	is [[7, 7, 9], [7, 7, 9], [7, 7, 9]]. If we change lst[1] = 7 to
+	arr[1][1] = 7 the end result will be the same since we are still
+	changing a spot in an array that has been referenced.
+
+c)	Using slice to create arr instead of using a reference to lst three
+	times would create a new array of [7, 8, 9] which is referenced by
+	arr three times. So if you use arr[1][1] = 7 the end result will still
+	be [[7, 7, 9], [7, 7, 9], [7, 7, 9]].
+
+d)	In order to create arr so that changing [1][1] will not change
+	[0][1] and [2][1] you need to create arr like this:
+	arr = [[7, 8, 9], [7, 8, 9], [7, 8, 9]]
+
+6.	
+a)	The Python statement produces a list of numbers that a given number
+	is divisible by. 
