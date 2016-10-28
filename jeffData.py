@@ -1,5 +1,61 @@
 import math
+import sys
+import re
+import os
+
 DEBUG = False
+# vim marks
+
+
+# mark i: def importTextFile():
+# mark c: def calcDiff(arr):
+# mark d: def distance(d0, d1):
+# mark p: def printIndividualResults(arr, individuals, averages):
+# mark r: # RUNNING THE SCRIPT #
+# mark t: # TESTING AREA #
+
+##############
+# HOW TO RUN #
+##############
+howToRun = '''
+You must enter a file to process. To do that from command line type 
+
+python jeffData.py apes.txt
+
+where apes.txt is the name of your data file. I have set the script to run on text
+files where the data was exported the same exact way as the data you have given
+me. If the data is formatted like that the script should run easily and with
+no problems.
+
+Did you want to use one of these files?
+'''
+
+
+# imports the first command line argument if one was given
+def importTextFile():
+    data = []
+    if len(sys.argv) <= 1:
+        print howToRun
+        os.system("ls *.txt")
+        print
+    else:
+        f = open(sys.argv[1], 'r')
+        lines = f.readlines()
+        # for each line except the first put each value into an array
+        # first line with column names is ignored:
+        for i in range(1, len(lines)):
+            # regex which splits a string by any number of spaces
+            values = re.split(" +", lines[i])
+            # value[1] must be a string since it is the species name otherwise all values must be floats
+            for j in range(0, len(values)):
+                if j != 1:
+                    values[j] = float(values[j])
+                if j == 0:
+                    values[j] = int(values[j])
+            if DEBUG:
+                print values
+            data.append(values)
+    return data
 
 # how different can you be while still being the same, how similar can you be while still being different?
 # pass an array of tuples, where the first value of each tuple is the group, second is x coordinate and third is y coordinate
@@ -9,7 +65,7 @@ DEBUG = False
 # averages dictionary calculates the averages for the species where the
 # - first value of each array is cumulative value of how different can you be while still being the same
 # - second value of each array is cumulative value of how similar can you be while still being different
-# - third value of each array is the number of individuals in the species
+# - third value of each array is the number of individuals in the species for averaging purposes
 def calcDiff(arr):
     individuals = []
     averages = {}
@@ -71,7 +127,7 @@ def distance(d0, d1):
     return math.sqrt(num)
 
 def printIndividualResults(arr, individuals, averages):
-    print "Individual Distances"
+    print "                 Individual Distances"
     print "      Max Same Species     Min Different Species"
     for i in range (0, len(individuals)):
         if (arr[i][0] < 10):
@@ -80,6 +136,22 @@ def printIndividualResults(arr, individuals, averages):
             print str(arr[i][0]) + ": ", individuals[i]
         elif (arr[i][0] < 1000):
             print str(arr[i][0]) + ":", individuals[i]
+
+######################
+# RUNNING THE SCRIPT #
+######################
+
+data = importTextFile()
+if len(data) > 0:
+    calcDiff(data)
+
+######################
+######################
+######################
+
+################
+# TESTING AREA #
+################
 
 if DEBUG:
     # answer for this array should be:
@@ -119,4 +191,4 @@ jeffData = [(1, 2,   0.0295245621,    -0.0346388028),
 (28, 3,   0.2485358622,    0.043009143),
 (29, 3,   0.1873608969,    -0.0753635334)]
 
-calcDiff(jeffData)
+# calcDiff(jeffData)
