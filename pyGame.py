@@ -21,26 +21,9 @@ def match(board, x1, y1, x2, y2):
         if adjacent(board, x1, y1, x2, y2):
             board[x1][y1] == 0
             board[x2][y2] == 0
-        # now the fun begins: we need to see if the two blocks can be connected by a
-        # straight line that turns 90* no more than twice with no other blocks in the way
-        # lets test this with 5, 1 and 8, 1.
-        # METHOD:
-        # - can we straight shot? if so, done. if not
-        #   - check above, to left, to right, and below (if not on bottom) for adjacent 0's
-        #   - if 0 exists go as many spaces as possible before stopping
-        #   - check if there is a 0 at relevant new angle
-        #   - if 0 exists go as many spaces as possible before stopping
-        #   - check if there is a 0 at relevant new angle
-        #   - if there is a straightShot from here to block 2, done and there is a match
+        # otherwise we compare match trails
         else: 
-            # if the blocks are in the same row or column:
-            # straightShot from nonadjacent block to block: easy, we are done
-            if (x1 == x2 or y1 == y2):
-                if straightShot(board, x1, y1, x2, y2)[0]:
-                    print "derp"
-            # not so easy...
-            else:
-                checkMatchTrails(board, createMatchTrail(board, x1, y1), createMatchTrail(board, x2, y2))
+            checkMatchTrails(board, createMatchTrail(board, x1, y1), createMatchTrail(board, x2, y2))
     else: 
         return board
 
@@ -61,40 +44,35 @@ def adjacent(board, x1, y1, x2, y2):
 # will even work with indeces that are one out of bounds so we can
 # test blocks on the edge against each other
 def straightShot(board, x1, y1, x2, y2):
-    output = [False, 0]
+    output = False
     if (x1 == x2):
         # condition works
         if y2 > y1:
             for y in range(y1 + 1, y2):
-                if board[x1][y] == 0:
-                    output[1] += 1
-                else:
+                if board[x1][y] != 0:
                     return output
         # condition works
         else:
             for y in range(y2 + 1, y1):
-                if board[x1][y] == 0:
-                    output[1] += 1
-                else:
+                if board[x1][y] != 0:
                     return output
-        output[0] = True
+        output = True
     elif (y1 == y2):
         # condition works
         if x2 > x1:
             for x in range(x1 + 1, x2):
-                if board[x][y1] == 0:
-                    output[1] += 1
-                else:
+                if board[x][y1] != 0:
                     return output
         # condition works
         else:
             for x in range(x2 + 1, x1):
-                if board[x][y1] == 0:
+                if board[x][y1] != 0:
                     output[1] += 1
                 else:
                     return output
-        output[0] = True
+        output = True
     return output
+
 
 # creates a trail of -1's from all possible directions of input block
 # works correctly
@@ -152,7 +130,7 @@ def createMatchTrail(board, x1, y1):
 def checkMatchTrails(board, list1, list2):
     for i in range(0, len(list1)):
         for j in range(0, len(list2)):
-            if straightShot(board, list1[i][0], list1[i][1], list2[j][0], list2[j][1])[0]:
+            if straightShot(board, list1[i][0], list1[i][1], list2[j][0], list2[j][1]):
                 return True
     return False
 
