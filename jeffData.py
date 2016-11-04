@@ -5,6 +5,7 @@ import os
 
 DEBUG = False
 # vim marks
+# This is a useless comment
 
 
 # mark i: def importTextFile():
@@ -127,15 +128,10 @@ def distance(d0, d1):
     return math.sqrt(num)
 
 def printIndividualResults(arr, individuals, averages):
-    print "                 Individual Distances"
-    print "      Max Same Species     Min Different Species"
+    print "                Individual Distances"
+    print "####    Max.Same.Species     Min.Diff.Species"
     for i in range (0, len(individuals)):
-        if (arr[i][0] < 10):
-            print str(arr[i][0]) + ":  ", individuals[i]
-        elif (arr[i][0] < 100):
-            print str(arr[i][0]) + ": ", individuals[i]
-        elif (arr[i][0] < 1000):
-            print str(arr[i][0]) + ":", individuals[i]
+        print "%4d    %16.14f     %16.14f" % (arr[i][0], individuals[i][0], individuals[i][1])
 
 ######################
 # RUNNING THE SCRIPT #
