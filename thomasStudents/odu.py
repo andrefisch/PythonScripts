@@ -30,14 +30,14 @@ pygame.mixer.music.load('note.mp3')
 
 # Some servers get annoyed if you make too many requests so dont do them all at once
 # Start here
-start = 8992
+start = 17978
 # End here
 end = sheet.max_row + 1
 # end = 6000
 
 for row in range (start, end):
     if (row % 999 == 0):
-        print ("GIVING THE SERVER A THREE MINUTE BREAK")
+        print ("GIVING THE SERVER A FIVE MINUTE BREAK")
         xfile.save('odu.xlsx')
         pygame.mixer.music.play()
         time.sleep(3)
